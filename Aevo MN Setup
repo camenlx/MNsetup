@@ -1,0 +1,73 @@
+Here’s is a quick tutorial on how to set up an AEVO Masternode on a VPS other than 01vps.net. In this example, I will use Vultr. 01Vps.net has a quick deploy AEVO recipe that can speed up the process. 
+
+====================
+Starting the Windows Wallet
+====================
+
+⦁	Download the latest release from https://github.com/aevocommunity/aevocoin/releases
+⦁	Run the wallet from the directory it was downloaded to and wait for sync. 
+⦁	If needed, go to Help > Debug > Console and add nodes with the command addnode (IP) add and change the (IP) with an IP address from the list at http://explorer.aevocoin.net/network
+⦁	Once synced, go to Recived and click on New Address
+⦁	Enter a label for your new MN address. For instance Masternode1, MN1 or whatever else you choose.
+⦁	Copy the new address and send exactly 42500 AEVO to this address. 
+⦁	Wait for at least 1 confirmation and then go to Help > Debug > Console.
+⦁	Type masternode genkey and press enter. Then type masternode outputs and press enter. Copy this information and paste it in a text file (such as Notepad) to save for later.
+⦁	Get the IP address of your VPS started in the next section.
+⦁	In the Windows wallet, click Masternodes and then click Create at the top. 
+⦁	Enter the following information in the box that opens:
+⦁	Alias: Label used in step 5
+⦁	Address: IP of VPS:13371 (Example: 127.0.0.1:13371
+⦁	Privkey: Information save from masternode genkey
+⦁	TxHash: First part of masternode outputs
+⦁	Output Index: Second part of masternode outputs. Should be just a 1 or 0
+⦁	Reward Address: Use if you would like your masternode reward to go to an address other than your masternode.
+⦁	Reward%: Use only if you entered something in step 6. Usually this would be 100 if you added an address to the previous step.
+⦁	Click OK
+
+====================
+DEPLOYING VPS
+====================
+⦁	Create an account at https://www.vultr.com/?ref=7277412 (referral link, Thank You!)
+⦁	Deploy new server, select location of server, select Ubuntu 16.04, select any server size, and enter hostname.
+⦁	Click DEPLOY NOW
+ 
+
+Next you need to SSH into your server. The software I use to accomplish this is www.putty.org
+4. Log in with your username and password found on Vultr dashboard.
+5. Make sure you have the necessary files to run the wallet:
+apt-get install build-essential libssl-dev libdb++-dev libboost-all-dev libqrencode-dev miniupnpc libminiupnpc-dev autoconf pkg-config libtool autotools-dev libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev automake -y
+add-apt-repository ppa:bitcoin/bitcoin
+apt-get update
+apt-get install libdb4.8-dev libdb4.8++-dev 
+====================
+INSTALLING AEVO ON VPS
+====================
+⦁	wget https://github.com/aevocommunity/aevocoin/releases/download/v1.0/Ubuntu.16.aevod
+⦁	mv Ubuntu.16.aevod aevod
+⦁	Start the wallet with ./aevod (will get an error telling you to modify the Aevo.conf)
+EDITING CONFIGURATION FILES
+====================
+You can now edit the Aevo.conf files to complete the remote controller masternode setup.
+rpcuser=XXXXXXXXXXXX
+rpcpassword=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+rpcallowip=127.0.0.1
+listen=1
+server=1
+daemon=1
+logtimestamps=1
+maxconnections=256
+masternode=1
+masternodeprivkey=[MASTERNODE GENKEY]
+masternodeaddr=[SERVER IP ADDRESS]:13371
+addnode=149.28.61.124
+
+====================
+STARTING WALLET
+====================
+⦁	After editing the config file, you can now start the wallet
+⦁	./aevod
+⦁	Wait for wallet to sync and match the latest block at aevo.evo.today
+⦁	./aevod getinfo
+⦁	Once synced, go to the Windows wallet, Masternodes, Click on MN1 then click Start
+⦁	On the VPS, type ./aevod masternode start
+⦁	Wait for those sweet rewards!
