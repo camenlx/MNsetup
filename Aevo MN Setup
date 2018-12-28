@@ -66,7 +66,7 @@ STARTING WALLET
 ====================
 ⦁	After editing the config file, you can now start the wallet
 ⦁	./aevod
-⦁	Wait for wallet to sync and match the latest block at aevo.evo.today
+⦁	Wait for wallet to sync and match the latest block at explorer.aevocoin.net
 ⦁	./aevod getinfo
 ⦁	Once synced, go to the Windows wallet, Masternodes, Click on MN1 then click Start
 ⦁	On the VPS, type ./aevod masternode start
